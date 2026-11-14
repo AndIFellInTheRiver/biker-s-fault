@@ -1,0 +1,96 @@
+#map {
+	position: relative;
+	width: 100%;
+	height: min(72vh, 790px);
+	min-height: 450px;
+	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	background: #e8eef2;
+}
+
+#map svg {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+#map circle,
+.legend > div {
+	--color-departures: steelblue;
+	--color-arrivals: darkorange;
+	--color: color-mix(
+		in oklch,
+		var(--color-departures) calc(100% * var(--departure-ratio)),
+		var(--color-arrivals)
+	);
+}
+
+#map circle {
+	fill: var(--color);
+	fill-opacity: 0.6;
+	stroke: white;
+	stroke-width: 1px;
+	pointer-events: auto;
+}
+
+.legend {
+	display: flex;
+	gap: 1px;
+	margin-block: 0.65rem;
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.legend > div {
+	flex: 1;
+	padding: 0.45rem 0.8rem;
+	background: var(--color);
+	color: white;
+	font-size: 0.85rem;
+	font-weight: 600;
+	text-align: center;
+}
+
+.legend > div:nth-child(2) {
+	color: #202b38;
+}
+
+@media (max-width: 650px) {
+	#map {
+		min-height: 420px;
+		height: 65vh;
+	}
+	.legend > div {
+		padding: 0.45rem 0.3rem;
+		font-size: 0.72rem;
+	}
+}
+
+/* Visible station tooltip (Step 4). Keep it above the map and station SVG. */
+.station-tooltip {
+	position: absolute;
+	z-index: 10;
+	display: none;
+	max-width: 280px;
+	padding: 0.65rem 0.85rem;
+	border-radius: 7px;
+	background: rgba(24, 33, 46, 0.95);
+	color: white;
+	font: 0.85rem/1.5 system-ui, sans-serif;
+	box-shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
+	pointer-events: none;
+}
+
+.station-tooltip strong {
+	display: block;
+	margin-bottom: 0.25rem;
+}
+
+#map circle {
+	cursor: pointer;
+}
